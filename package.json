@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Multi step Athlete input form",
   "main": "server.js",
-  "repository" : {
-    "type": "git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajplee/AthleteProfile.git"
   },
   "author": "Andrew",
   "dependencies": {
