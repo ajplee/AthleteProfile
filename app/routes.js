@@ -21,6 +21,18 @@ module.exports = function (app) {
             LastName: req.body.LastName,
             Nationality: req.body.Nationality,
             DateOfBirth: req.body.DateOfBirth,
+            Location: req.body.Location,
+            Association: req.body.Association, 
+            Team: req.body.Team, 
+            Gender: req.body.Gender,
+            Sports: req.body.Sports, 
+            About: req.body.About,
+            Interests: req.body.Interests,
+            Charities: req.body.Charities,
+            SocialMediaHandles: req.body.SocialMediaHandles,
+            Pets: req.body.Pets,
+            DrinksAlcohol: req.body.DrinksAlcohol,
+            Married:req.body.Married,
             done: false
         }, function (err, athlete) {
             if (err) {
