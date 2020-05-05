@@ -10,7 +10,7 @@
   "author": "Andrew",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "mongoose": "4.10.8",
+    "mongoose": "5.9.12",
     "express": "^4.10.8",
     "method-override": "^2.3.10",
     "morgan": "^1.9.0"
