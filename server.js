@@ -6,7 +6,7 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-mongoose.connect('mongodb://andrew:Test22@ds253368.mlab.com:53368/heroku_tfzn5njh');
+mongoose.connect('mongodb://heroku_wp1kg4fr@dbh75.mlab.com:27757/heroku_wp1kg4fr');
 
 app.use(express.static('./public'));
 app.use(morgan('dev'));
