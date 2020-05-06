@@ -80,8 +80,6 @@ angular.module('athleteController', [])
             instagram: ""
         };
 
-        console.log("slihowi");
-        console.log(this.facebook);
         $scope.formData.SocialMediaHandles = {
             'facebook' : $scope.formData.facebook,
             'twitter' : $scope.formData.twitter, 
