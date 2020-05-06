@@ -8,7 +8,14 @@
 	<title>Athlete Profile Information</title>
 
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#athlete-list 			{ margin-bottom:30px; }
+		#athlete-form 	 		{ margin-bottom:50px; }
+	</style>
 
 	<!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>load angular -->
 
@@ -18,9 +25,242 @@
         
 	<script src="js/main.js"></script>
 	<script src="js/endpoints.js"></script>
-	<script src="js/factory.js"></script>
+	<script src="factory.js"></script>
 
 </head>
 <body ng-controller="mainController">
+	<div class="container">
+
+		<div class="jumbotron text-center">
+			<h1>Athlete Input Form</h1>
+		</div>
+
+		<div id="athlete-list" class="row">
+			<div class="col-xs-12 col-lg-8">
+				<h2 class="athlete-section-header">Athletes</h2>
+				<div class='athletes'>
+					<div class='athlete' ng-repeat="athlete in athletes">
+						<div class="col athlete-name">
+							<div class="col-md-4">Name: {{ athlete.FirstName }} {{ athlete.LastName }}.  Sport: {{ athlete.Sports }}</div>
+						</div> 
+						<div class="col md-1">
+							<span class="athlete-delete fa fa-trash-o" ng-click="deleteAthlete(athlete._id)">
+							</span>
+						</div>
+					</div>		
+				  </div>
+			</div>
+		</div>
+						
+		<form name="multiStepForm" id="athlete-form" class="form-validation" role="form" novalidate>
+			<div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction}">
+				<div class="animate-switch" ng-switch-default>
+					<div class="row">
+						<div class="col-md-12">
+							<p>
+								Athlete Input Form
+							</p>
+							<button type="button" class="btn btn-primary" ng-click="next('1')">Start</button>
+						</div>
+					</div>
+				</div>
+				<div class="animate-switch" ng-switch-when="1">
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label class="firstName">First Name:</label>
+									<input type="text" class="form-control" id="firstName" name="firstName" ng-model="formData.FirstName"
+									ng-class="{'input-error':formValidation && multiStepForm.firstName.$error.required}" required>
+								</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="lastName">Last Name:</label>
+									<input type="text" class="form-control" id="lastName" name="lastName" ng-model="formData.LastName"
+										ng-class="{'input-error':formValidation && multiStepForm.lastName.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="dateOfBirth">Date Of Birth:</label>
+									<input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" ng-model="formData.DateOfBirth"
+										ng-class="{'input-error':formValidation && multiStepForm.DateOfBirth.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="nationality">Nationality:</label>
+									<input type="text" class="form-control" id="nationality" name="nationality" ng-model="formData.Nationality"
+										ng-class="{'input-error':formValidation && multiStepForm.nationality.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="gender">Gender:</label>
+									<select class="form-control" id="gender" name="gender" ng-model="formData.Gender" 
+									ng-class="{'input-error':formValidation && multiStepForm.gender.$error.required}"
+										required>
+										  <option value=" {{x}}" ng-repeat="x in gender"> {{x}} </option> 
+									  </select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="tb-sports">Sport:</label>
+									<select class="form-control" id="sports" name="sports" ng-model="formData.Sports" 
+									ng-class="{'input-error':formValidation && multiStepForm.sports.$error.required}"
+										required >
+									  <option value="{{sport}}" ng-repeat="sport in sports"> {{sport}} </option>
+									  </select>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-info" ng-click="back('')">Back</button>
+					<button type="button" class="btn btn-primary" ng-click="next('2')">Next</button>
+				</div>
+					
+				<!-- stage 2 -->
+				<div class="animate-switch"  ng-switch-when="2"> 
+					<div class="form-group">
+						<label for="about">About:</label>
+						<textarea class="form-control" rows="5" id="about" ng-model="formData.About"></textarea>
+					</div>
+					<div class="row">
+						<div class="col-md-4 mb-3">
+							<label for="socialMediaHandles">Social Media Handles</label>
+							<div class="form-group">
+                                <div class="col">
+                                    <a href="" class="fa fa-facebook"></a>
+                                    <input type="text" class="form-control" id="facebookHandle" name="facebookHandle" ng-model="formData.facebook"> 
+                                </div>
+                                <div class="col">
+                                    <a href="" class="fa fa-twitter"></a>
+                                    <input type="text" class="form-control" id="twitterHandle" name="twitterHandle" ng-model="formData.twitter"> 
+                                </div>
+                                <div class="col">
+                                    <a href="" class="fa fa-instagram"></a>
+                                    <input type="text" class="form-control" id="instagramHandle" name="instagramHandle" ng-model="formData.instagram"> 
+                                </div>
+                            </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="location">Location:</label>
+								<input type="text" class="form-control" id="location" name="location"ng-model="formData.Location"
+								ng-class="{'input-error':formValidation && multiStepForm.location.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="team">Team:</label>
+								<input type="text" class="form-control" id="team" name="team" ng-model="formData.Team" 
+								ng-class="{'input-error':formValidation && multiStepForm.team.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="association">Association:</label>
+								<input type="text" class="form-control" id="association" name="association" ng-model="formData.Association"
+								ng-class="{'input-error':formValidation && multiStepForm.association.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="interests">Interests:</label>
+								<input type="text" class="form-control" id="interests" name="interests" ng-model="formData.Interests"
+								ng-class="{'input-error':formValidation && multiStepForm.interests.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="charities">Charities:</label>
+								<input type="text" class="form-control" id="charities" name="charities" ng-model="formData.Charities"
+								ng-class="{'input-error':formValidation && multiStepForm.charities.$error.required}" required>
+							</div>
+						</div>
+					</div>            
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="pets">Pets:</label>
+								<input type="text" class="form-control" id="pets" name="pets" ng-model="formData.Pets" 
+								ng-class="{'input-error':formValidation && multiStepForm.pets.$error.required}" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="alcohol">Drinks Alcohol:</label>
+								<select class="form-control" id="alcohol" name="alcohol" ng-model="formData.DrinksAlcohol"
+								ng-class="{'input-error':formValidation && multiStepForm.alcohol.$error.required}"
+										required >
+									<option value="{{x}}" ng-repeat="x in bool">{{x}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="married">Married:</label>
+								<select class="form-control" id="married" name="married"  ng-model="formData.Married"
+								ng-class="{'input-error':formValidation && multiStepForm.married.$error.required}"
+										required >
+									<option value="{{x}}" ng-repeat="x in bool" >{{x}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-info" ng-click="back('1')">Back</button>
+					<button type="button" class="btn btn-primary" ng-click="next('3')">Next</button>	
+				</div>
+					
+				<!-- Stage 3 -->
+				<div class="animate-switch" ng-switch-when="3">
+					<h3>Summary</h3>
+					<p>First name: {{formData.FirstName}}</p>
+					<p>Last name: {{formData.LastName}}</p>
+					<p>Sports: {{formData.Sports}} </p>
+					<p>Nationality: {{formData.Nationality}} </p>
+					<p>Gender: {{formData.Gender}} </p>
+					<p>DateOfBirth: {{formData.DateOfBirth}} </p>
+					<p>About: {{formData.About}} </p>
+					<p>Social Media Handles: {{formData.SocialMediaHandles}} </p>
+					<p>Location: {{formData.Location}} </p>
+					<p>Team: {{formData.Team}} </p>
+					<p>Association: {{formData.Association}} </p>
+					<p>Interests: {{formData.Interests}} </p>
+					<p>Charities: {{formData.Charities}} </p>
+					<p>Pets: {{formData.Pets}} </p>
+					<p>DrinksAlcohol: {{formData.DrinksAlcohol}} </p>
+					<p>Married: {{formData.Married}} </p>
+		
+					<button type="button" class="btn btn-info" ng-click="back('2')">Back</button>
+					<button type="button" class="btn btn-warning" ng-click="createAthlete()">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
