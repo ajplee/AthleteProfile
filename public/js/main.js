@@ -113,7 +113,8 @@ angular.module('athleteController', [])
 					.success(function(data) {
 						$scope.loading = false;
 						$scope.formData = {};
-						$scope.athletes = data; 
+                        $scope.athletes = data; 
+                        $scope.stage = "";
 					});
 			}
 		};
